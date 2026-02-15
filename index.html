@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Stemwijzer Project Molenzicht</title>
+
+<style>
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  margin: 0;
+  background:#f6f7f9;
+  color:#111;
+}
+
+:root{
+  --green:#0E382A;
+}
+
+.wrap {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== HEADER MET FOTO ===== */
+header {
+  background:#fff;
+  border-bottom:1px solid #e6e8ee;
+}
+
+/* Banner: laat onderkant zien, snijdt indien nodig bovenkant weg */
+.header-image {
+  width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  background: #0E382A;
+}
+
+.header-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  /* maak de banner hoger op mobiel zodat de onderkant (tekst) zichtbaar blijft */
+  .header-image{
+    max-height: 320px;     /* was 230px */
+    overflow: visible;     /* voorkom “afsnijden” */
+  }
+
+  /* laat de afbeelding z’n eigen hoogte bepalen */
+  .header-image img{
+    height: auto;          /* was 100% */
+    width: 100%;
+    object-fit: contain;
+    object-position: bottom;
+  }
+}
+
+
+/* ===== MEDIA MARQUEE (onder banner) ===== */
+.media-marquee{
+  background:#fff;
+  border-bottom:1px solid #e6e8ee;
+}
+
+.media-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.media-title{
+  font-size:22px;           /* gelijk aan h1 */
+  font-weight:700;
+  color:#111;
+}
+
+.media-controls{
+  display:flex;
+  gap:8px;
+}
+
+.media-arrow{
+  border:1px solid #d7dbe6;
+  background:#fff;
+  width:38px;
+  height:38px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:800;
+  line-height:1;
+}
+
+.media-arrow:hover{ opacity:.9; }
+
+/* ===== BANNER INHOUD + RAND IN GROEN ===== */
+.media-viewport{
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid #0E382A;  /* groen */
+  background:#0E382A;        /* groen vlak achter bewegende items */
+}
+
+.media-track{
+  display:flex;
+  gap:12px;
+  padding:12px;
+  will-change: transform;
+  background:#0E382A;        /* groen */
+}
+
+.media-item{
+  flex: 0 0 calc((100% - 24px) / 3);
+  text-decoration:none;
+  color:#fff;
+
+  /* rand rondom elk item in groen */
+  border:2px solid #0E382A;
+
+  border-radius:12px;
+  overflow:hidden;
+  background:#0E382A;        /* tegel binnenkant groen */
+}
+
+.media-item img{
+  width:100%;
+  height:160px;
+
+  /* HELE afbeelding zichtbaar (geen afsnijden) */
+  object-fit: contain;
+
+  /* achtergrond achter logo's ook groen */
+  background:#0E382A;
+
+  display:block;
+}
+
+.media-cap{
+  padding:8px 10px;
+  font-size:13px;
+  font-weight:700;
+  text-align: center;
+  color: #fff;
+  border-top:1px solid #0E382A; /* groen */
+}
+
+/* Tablet: 2 zichtbaar */
+@media (max-width: 900px){
+  .media-item{ flex-basis: calc((100% - 12px) / 2); }
+}
+
+/* Mobiel: 1 zichtbaar */
+@media (max-width: 560px){
+  .media-item{ flex-basis: 100%; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  padding: 18px 20px;
+}
+
+h1 {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+}
+
+.sub {
+  margin: 0;
+  color:#444;
+  line-height:1.4;
+}
+
+/* ===== PANELS ===== */
+.panel {
+  background:#fff;
+  border:1px solid #e6e8ee;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.panel + .panel {
+  margin-top: 14px;
+}
+
+.panel h2 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.panel p {
+  margin: 0 0 10px 0;
+  color:#444;
+  font-size:14px;
+  line-height:1.45;
+}
+
+.fineprint {
+  color:#666;
+  font-size:12px;
+  margin: 12px 0 0;
+  line-height:1.45;
+}
+
+/* ===== GROEN BLOK VOOR STELLINGEN ===== */
+.panel.statements {
+  background:#0E382A;
+  border-color:#0E382A;
+}
+
+.panel.statements h2 {
+  color:#fff;
+}
+
+.panel.statements .intro {
+  color:#e6f0eb;
+}
+
+/* ===== STELLINGEN CARDS ===== */
+.card {
+  border:1px solid #eef0f5;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background:#fff;
+}
+
+.card-top {
+  display:flex;
+  gap: 10px;
+}
+
+.nr {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background:#111;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 13px;
+  flex: 0 0 auto;
+}
+
+.st-text { font-weight:600; }
+
+/* ===== ANTWOORDKNOPPEN ===== */
+.answers {
+  display:flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.ans {
+  border:1px solid #d7dbe6;
+  background:#fff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor:pointer;
+  transition: all .1s ease;
+}
+
+/* HOVER – alleen als niet actief */
+.ans:hover:not(.active) {
+  background:#FF6600;
+  border-color:#FF6600;
+  color:#fff;
+}
+
+/* GESELECTEERD */
+.ans.active {
+  background:#FF6600;
+  border-color:#FF6600;
+  color:#fff;
+}
+
+/* Focus voor toegankelijkheid */
+.ans:focus-visible {
+  outline:2px solid #FF6600;
+  outline-offset:2px;
+}
+
+
+/* ===== EXTRA: STELLING-TOELICHTING (+ / - zonder omranding) ===== */
+.st-uitleg{
+  margin-top: 8px;
+  margin-bottom: 6px; /* zodat answers er net onder vallen */
+}
+
+.st-uitleg-sum{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+  color:#111;
+  font-size:14px;
+  font-weight:600;
+}
+
+/* geen standaard pijltje */
+.st-uitleg-sum { list-style: none; }
+.st-uitleg-sum::-webkit-details-marker { display:none; }
+
+/* het plus/min teken */
+.st-uitleg-icon{
+  width:20px;
+  height:20px;
+  border-radius:999px;
+  border:1px solid #d7dbe6;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  line-height:1;
+  font-size:14px;
+}
+
+/* standaard is + */
+.st-uitleg-icon::before{ content:"+"; }
+
+/* open = - */
+.st-uitleg[open] .st-uitleg-icon::before{ content:"−"; }
+
+.st-uitleg-text{
+  margin-top: 8px;
+  padding-left: 28px; /* uitlijnen met tekst na het + icoon */
+  color:#111;
+  font-size:14px;
+  line-height:1.45;
+}
+
+/* ===== THEMA AANDUIDING CURSIEF ===== */
+.st-meta{
+  font-size:14px;      /* gelijk aan toelichting knop */
+  font-style:italic;   /* cursief zoals gevraagd */
+  font-weight:400;     /* niet vet */
+  color:#111;
+  margin-top:4px;
+}
+
+/* ===== GROEN OUTER BLOK MET WIT INNER BLOK ===== */
+.panel.outer-green{
+  background:#0E382A;
+  border-color:#0E382A;
+}
+
+.panel.outer-green h2{
+  color:#fff;
+}
+
+.panel.outer-green .outer-intro{
+  color:#e6f0eb;
+}
+
+.inner-white{
+  background:#fff;
+  border:1px solid #e6e8ee;
+  border-radius:12px;
+  padding:14px;
+}
+
+/* ===== WEGING: THEMA'S DIKGEDRUKT + SLIDER MET ORANJE VULLING (1..5) ===== */
+#themes label{
+  font-weight:700;
+}
+
+/* EXTRA: app.js gebruikt .theme-title, dus deze zet de thema's echt vet */
+.theme-title{
+  font-weight:700;
+}
+
+/* Slider basis + gradient-vulling via CSS variable --fill */
+#themes input[type="range"]{
+  width: 180px;
+  height: 4px;
+  border-radius: 999px;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+
+  /* Dit is de “vulling”: oranje tot --fill, daarna grijs */
+  background: linear-gradient(
+    to right,
+    #FF6600 0%,
+    #FF6600 var(--fill, 50%),
+    #d7dbe6 var(--fill, 50%),
+    #d7dbe6 100%
+  );
+}
+
+/* Chrome / Edge track transparant, want we tekenen op input zelf */
+#themes input[type="range"]::-webkit-slider-runnable-track{
+  height: 4px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+/* Chrome / Edge thumb */
+#themes input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #FF6600;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+  cursor: pointer;
+  margin-top: -6px; /* uitlijnen met track */
+}
+
+/* Firefox track transparant */
+#themes input[type="range"]::-moz-range-track{
+  height: 4px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+/* Firefox thumb */
+#themes input[type="range"]::-moz-range-thumb{
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #FF6600;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+  cursor: pointer;
+}
+
+/* Firefox default "progress" uit */
+#themes input[type="range"]::-moz-range-progress{
+  background: transparent;
+}
+
+
+/* ===== TOELICHTINGEN PARTIJEN KNOP ===== */
+.party-btn {
+  border:1px solid #0E382A;
+  background:#0E382A;
+  color:#fff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor:pointer;
+  font-weight:600;
+  display:inline-block;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.party-btn:hover { opacity:.9; }
+
+/* details reset */
+summary { list-style:none; }
+summary::-webkit-details-marker { display:none; }
+
+.party-list {
+  margin-top: 10px;
+  display:grid;
+  gap: 10px;
+}
+
+.party-row {
+  border:1px solid #eef0f5;
+  border-radius: 10px;
+  padding: 10px;
+  background:#fbfcff;
+}
+
+.party-name { font-weight:700; }
+.party-note { margin-top: 6px; color:#333; }
+
+/* ===== RESULTATEN ===== */
+.hidden { display:none; }
+
+.result-item {
+  border:1px solid #eef0f5;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background:#fff;
+}
+
+.bar-wrap {
+  background:#eef0f5;
+  border-radius: 999px;
+  overflow:hidden;
+  height: 10px;
+  margin-top: 8px;
+}
+
+/* Balkkleur ORANJE */
+.bar { background:#FF6600; height: 10px; }
+
+/* ===== RESULTAAT PANEL GROEN (zoals elders) ===== */
+#results{
+  background:#0E382A;
+  border-color:#0E382A;
+}
+#results h2{
+  color:#fff;
+}
+
+/* ===== BEKIJK RESULTATEN KNOP (onder weging) ===== */
+#btnResult{
+  width: 100%;
+  border: 1px solid #111;
+  background:#111;
+  color:#fff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  cursor: not-allowed;
+  font-weight: 800;
+  font-size: 15px;
+  transition: all .15s ease;
+}
+
+/* Als alles ingevuld is, zet app.js disabled=false.
+   Dan wordt hij oranje en klikbaar. */
+#btnResult:not(:disabled){
+  background:#FF6600;
+  border-color:#FF6600;
+  cursor:pointer;
+}
+
+/* Hover effect alleen als knop actief is */
+#btnResult:not(:disabled):hover{
+  filter: brightness(0.95);
+}
+
+/* Kleine toelichting tekst onder de knop */
+.result-hint{
+  margin-top: 8px;
+  font-size: 12px;
+  color:#444;
+  line-height: 1.35;
+}
+
+/* ===== DEMOGRAFIE BOVEN RESULTATENKNOP ===== */
+.demo-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:10px;
+  margin-top: 12px;
+}
+
+@media (max-width: 760px){
+  .demo-grid{ grid-template-columns: 1fr; }
+}
+
+.demo-field label{
+  display:block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color:#111;
+}
+
+.demo-field select,
+.demo-field input{
+  width:100%;
+  border:1px solid #d7dbe6;
+  border-radius: 10px;
+  padding: 10px 10px;
+  font-size: 14px;
+  outline: none;
+  background:#fff;
+}
+
+.demo-field select:focus,
+.demo-field input:focus{
+  border-color:#FF6600;
+  box-shadow: 0 0 0 2px rgba(255, 102, 0, .15);
+}
+
+.demo-error{
+  margin-top: 8px;
+  font-size: 12px;
+  color:#b00020;
+  line-height: 1.35;
+}
+
+
+/* ===== Standpunten partijen Nissewaard ===== */
+	/* introtekst onder de titel */
+	.standpunten-intro{ color:#fff; margin:8px 0 16px 0; font-size:15px; line-height:1.4; }
+.standpunten-panel{
+  margin-top:14px;
+  /* overrulen van .panel (wit vlak) zodat dit blok echt groen is */
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.standpunten-inner{ background: var(--green); border-radius: 16px; padding: 16px; }
+/* zelfde look & feel als kop 'Stellingen' */
+.standpunten-title{ margin:0 0 12px 0; color:#fff; font-weight:700; font-size: 16px; letter-spacing:.2px; cursor: default; }
+.standpunten-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 860px){ .standpunten-grid{ grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px){ .standpunten-grid{ grid-template-columns: repeat(2, 1fr); } }
+.standpunten-tile{ background:#fff; border-radius: 14px; min-height: 78px; display:flex; align-items:center; justify-content:center; padding: 10px; cursor:pointer; user-select:none; }
+.standpunten-tile:hover{ transform: translateY(-1px); }
+.standpunten-logo{ max-width: 100%; max-height: 56px; object-fit: contain; display:block; }
+.standpunten-fallback{ font-weight:800; color:#1b1b1b; text-align:center; font-size:14px; line-height:1.1; }
+
+.standpunten-detail{ margin-top: 14px; background:#fff; border-radius: 16px; padding: 14px; }
+.standpunten-partyname{ font-size: 18px; font-weight: 900; margin: 0 0 10px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+	/* Standpunten altijd onder elkaar (1 kolom) */
+	.standpunten-cols{ display:grid; grid-template-columns: 1fr; gap: 10px; }
+.standpunten-card{ border: 1px solid #e6e6e6; border-radius: 14px; padding: 10px 12px; }
+.standpunten-card h4{ margin: 0 0 6px 0; font-size: 14px; letter-spacing:.2px; }
+.standpunten-card p{ margin:0; color:#222; }
+
+
+/* FIX: intro-tekst standpunten altijd wit */
+.standpunten-panel .standpunten-intro{ color:#fff !important; }
+
+
+
+/* ===== SOCIALS MARQUEE (onderaan) ===== */
+.socials-marquee{ background:#fff; border-top:1px solid #e6e8ee; margin-top:18px; display:block; width:100%; }
+.socials-marquee .media-track{ gap:6px; padding:8px; }
+.socials-marquee .media-item img{ height:240px; }
+.socials-marquee .media-cap{ display:flex; flex-direction:row; align-items:center; justify-content:flex-start; gap:8px; padding:8px 10px; text-align:left; }
+.socials-marquee .social-links{ display:inline-flex; gap:8px; }
+.socials-marquee .social-link{ width:28px; height:28px; border-radius:999px; display:flex; align-items:center; justify-content:center; text-decoration:none; background: rgba(255,255,255,.78); border:1px solid rgba(0,0,0,.08); }
+.socials-marquee .social-link svg{ width:16px; height:16px; display:block; }
+.socials-marquee .social-link .ig{ fill:#E1306C; }
+.socials-marquee .social-link .fb{ fill:#1877F2; }
+.socials-marquee .social-link .web{ fill:#111; }
+.socials-marquee .social-link .wa{ fill:#25D366; }
+.socials-marquee .social-text{ color:#111; text-decoration:none; font-weight:700; }
+.socials-marquee .social-text:hover{ text-decoration:underline; }
+.socials-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+.socials-title{ font-size:22px; font-weight:700; color:#111; }
+
+
+
+/* ===== SOCIALS: ICONEN ONDER AFBEELDING (GEGROEPEERD EN GECENTREERD) ===== */
+.socials-marquee .media-track{ gap:6px !important; padding:8px !important; }
+.socials-marquee .media-cap{
+  display:flex !important;
+  flex-direction:row !important;
+  align-items:center !important;
+  justify-content:center !important; /* hele rij gecentreerd onder de afbeelding */
+  gap:10px !important;
+  text-align:left !important;
+}
+.socials-marquee .social-links{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <!-- BANNER -->
+  <div class="header-image">
+    <img src="header.png" alt="Project Molenzicht">
+  </div>
+
+  <!-- MEDIA GALERIJ (onder de banner) -->
+  <div class="media-marquee" aria-label="Molenzicht in de media">
+    <div class="wrap" style="padding-top:12px; padding-bottom:12px;">
+      <div class="media-head">
+        <div class="media-title">Bewonersinitiatief Molenzicht in de media</div>
+        <div class="media-controls">
+          <button class="media-arrow" type="button" data-media-left aria-label="Vorige">&#x2039;</button>
+          <button class="media-arrow" type="button" data-media-right aria-label="Volgende">&#x203A;</button>
+        </div>
+      </div>
+
+      <div class="media-viewport" data-media-viewport>
+        <div class="media-track" data-media-track>
+
+          <!-- media1 = AD -->
+          <a class="media-item" href="https://www.ad.nl/nissewaard/honderden-bezwaren-leiden-tot-uitstel-besluit-over-bouw-van-1700-woningen~ac5791ee/" target="_blank" rel="noopener">
+            <img src="media1.jpg" alt="AD">
+            <div class="media-cap">Uitstel besluit bouw 1700 woningen</div>
+          </a>
+
+          <!-- media2 = RTV Rijnmond -->
+          <a class="media-item" href="https://www.rijnmond.nl/nieuws/2136042/bewoners-verzetten-zich-tegen-nieuwbouw-in-spijkenisse-er-is-geluisterd-maar-niks-opgelost" target="_blank" rel="noopener">
+            <img src="media2.jpg" alt="RTV Rijnmond">
+            <div class="media-cap">Verzet tegen nieuwbouwplan Molenzicht</div>
+          </a>
+
+          <!-- media3 = Groot Nissewaard -->
+          <a class="media-item" href="https://www.grootnissewaard.nl/nieuws/actueel/220635/nieuwe-raad-neemt-besluit-over-molenzicht" target="_blank" rel="noopener">
+            <img src="media3.jpg" alt="Groot Nissewaard">
+            <div class="media-cap">Nieuwe Raad besluit over Molenzicht</div>
+          </a>
+
+          <!-- media4 = LINQ Media -->
+          <a class="media-item" href="https://www.linqmedia.nl/nieuws/bewoners-maken-zich-zorgen-om-komst-nieuwe-wijk-molenzicht" target="_blank" rel="noopener">
+            <img src="media4.jpg" alt="LINQ Media">
+            <div class="media-cap">Bewoners maken zich zorgen om komst Molenzicht</div>
+          </a>
+
+          <!-- media5 = Spieke -->
+          <a class="media-item" href="https://www.facebook.com/SpiekeNL/posts/het-industrieterrein-bij-de-spijkenisserbrug-tussen-de-schenkelweg-en-de-groene-/1445755020884890/" target="_blank" rel="noopener">
+            <img src="media5.jpg" alt="Spieke">
+            <div class="media-cap">Zorgen om komst Molenzicht</div>
+          </a>
+
+          <!-- media6 = Facebook -->
+          <a class="media-item" href="https://www.facebook.com/projectmolenzicht/" target="_blank" rel="noopener">
+            <img src="media6.jpg" alt="Facebook">
+            <div class="media-cap">Facebookgroep project Molenzicht</div>
+          </a>
+
+          <!-- media7 = Instagram -->
+          <a class="media-item" href="https://instagram.com/projectmolenzicht" target="_blank" rel="noopener">
+            <img src="media7.jpg" alt="Instagram">
+            <div class="media-cap">Instagram project Molenzicht</div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TITEL + INTRO -->
+  <div class="wrap hero">
+    <h1>Stemwijzer Nissewaard (vanuit bewonersinitiatief Molenzicht)</h1>
+
+    <p class="sub">
+      Beantwoord 5 stellingen rondom wonen, voorzieningen en leefbaarheid in Nissewaard. Geef per thema aan wat voor jou zwaarder weegt.
+      Daarna zie je welke politieke partij het beste matcht op basis van hun ingevulde standpunten.
+      Wil je weten hoe de weging werkt, kijk dan onderaan de pagina.
+    </p>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ===== STELLINGEN (GROEN) ===== -->
+<section class="panel statements">
+  <h2>Stellingen</h2>
+
+  <p class="intro">
+    Kies per stelling jouw standpunt en bekijk via de knop
+    “Toelichtingen partijen” hoe partijen hun keuze motiveren.
+  </p>
+
+  <div id="statements"></div>
+</section>
+
+<!-- ===== WEGING ===== -->
+<section class="panel outer-green">
+  <h2>Weging per thema</h2>
+  <p class="outer-intro">
+    Geef per thema aan hoe zwaar het voor jou meeweegt (1 = laag, 5 = hoog).
+  </p>
+
+  <div class="inner-white">
+    <div id="themes"></div>
+
+    <!-- ===== Demografie (verplicht voor resultaten) ===== -->
+    <div class="demo-grid" aria-label="Demografische gegevens">
+      <div class="demo-field">
+        <label for="gender">Geslacht</label>
+        <select id="gender" name="gender" required>
+          <option value="" selected>Kies…</option>
+          <option value="man">Man</option>
+          <option value="vrouw">Vrouw</option>
+          <option value="anders">Anders</option>
+        </select>
+      </div>
+
+      <div class="demo-field">
+        <label for="age">Leeftijd</label>
+        <input id="age" name="age" type="text" inputmode="numeric" maxlength="3" placeholder="Bijv. 34" autocomplete="off" required>
+      </div>
+
+      <div class="demo-field">
+        <label for="postcode">Postcode</label>
+        <input id="postcode" name="postcode" type="text" inputmode="text" maxlength="6" placeholder="1234AB" autocomplete="off" required>
+      </div>
+    </div>
+    <div id="demoError" class="demo-error" aria-live="polite"></div>
+
+    <!-- ===== Bekijk resultaten knop + toelichting ===== -->
+    <div style="margin-top:14px;">
+      <button id="btnResult" type="button" disabled>Bekijk resultaten</button>
+      <div class="result-hint">De button verandert in oranje als alle stellingen beantwoord zijn.</div>
+    </div>
+
+  
+
+
+</div>
+</section>
+
+
+<!-- ===== STANDPUNTEN PARTIJEN NISSEWAARD (altijd zichtbaar) ===== -->
+<section class="panel standpunten-panel">
+  <div class="standpunten-inner" id="standpuntenPartijen">
+    <h2 class="standpunten-title">Standpunten partijen Nissewaard</h2>
+<p class="standpunten-intro">Hieronder vind je de standpunten van partijen over bouwen i.r.t. leefbaarheid en voorzieningen, verkeersontsluiting. Tot slot zijn de partijen vrij hun standpunt te geven over hoe verder met project Molenzicht. </p>
+
+    <div id="standpuntenGrid" class="standpunten-grid" aria-live="polite"></div>
+
+    <div id="standpuntenDetail" class="standpunten-detail hidden"></div>
+  </div>
+</section>
+
+<!-- ===== RESULTAAT ===== -->
+<section class="panel hidden" id="results">
+  <h2>Resultaat</h2>
+  <div id="resultList"></div>
+</section>
+
+<!-- ===== UITGEBREIDE UITLEG ===== -->
+<section class="panel outer-green">
+  <h2>Uitleg</h2>
+  <p class="outer-intro">
+    Lees hieronder hoe deze stemwijzer werkt en hoe de match wordt berekend.
+  </p>
+
+  <div class="inner-white">
+    <p>
+Deze stemwijzer is een initiatief van het bewonersinitiatief Molenzicht. Wij komen op voor de belangen van bestaande inwoners van Nissewaard in relatie tot het plan om circa 1.700 woningen te bouwen nabij de Spijkenisserbrug. Dit plan heeft grote gevolgen voor bereikbaarheid, voorzieningen en leefbaarheid in de omgeving.
+<p>
+De betrokkenheid van inwoners heeft geleid tot 555 ingediende zienswijzen. Mede daardoor hebben politieke partijen besloten de besluitvorming over Molenzicht over de gemeenteraadsverkiezingen heen te tillen.
+<p>
+De vragen die hierbij spelen gaan echter verder dan één project. Het gaat ook over de groei van Nissewaard, de balans tussen woningbouw en voorzieningen, de bereikbaarheid van de gemeente en de manier waarop inwoners worden betrokken bij belangrijke keuzes. Daarom richt deze stemwijzer zich op wonen, leefbaarheid en voorzieningen in heel Nissewaard.
+<p>
+De tool werkt vergelijkbaar met de landelijke StemWijzer. Politieke partijen hebben per stelling aangegeven of zij het eens, oneens of neutraal zijn en konden hun standpunt toelichten. Jij kunt dezelfde stellingen beantwoorden en aangeven welke onderwerpen voor jou het zwaarst wegen.
+    <p>
+      Partijen hebben per stelling aangegeven of zij het <em>eens</em>, <em>oneens</em> of
+      <em>geen mening</em> zijn en konden daarbij een eigen toelichting geven. Jij kunt
+      dezelfde stellingen beantwoorden en daarnaast aangeven welke thema’s voor jou zwaarder
+      moeten meewegen.
+    </p>
+
+    <h2 style="margin-top:12px;">Hoe wordt de match berekend?</h2>
+
+    <p><strong>1.</strong> Je beantwoordt elke stelling met Eens / Oneens / Geen mening.</p>
+    <p><strong>2.</strong> We vergelijken dit met het standpunt van iedere partij.</p>
+
+    <p>
+      <strong>3. Punten per stelling</strong><br>
+      • Zelfde antwoord als partij = <strong>2 punten</strong><br>
+      • Partij “geen mening” terwijl jij wél kiest = <strong>1 punt</strong><br>
+      • Tegenovergesteld antwoord = <strong>0 punten</strong>
+    </p>
+
+    <p>
+      <strong>4.</strong> De score wordt vermenigvuldigd met de
+      <strong>weging van het thema</strong> (1–5).
+    </p>
+
+    <p>
+      <strong>5.</strong> Het totaal wordt omgerekend naar een
+      <strong>percentage overeenkomst</strong>.
+    </p>
+
+    <p class="fineprint">
+      Deze stemwijzer is een bewonersinitiatief. Het resultaat is een hulpmiddel om
+      partijstandpunten te vergelijken en geen officieel stemadvies.
+    </p>
+  </div>
+</section>
+
+<!-- ===== SOCIALS (onderaan) ===== -->
+<div class="socials-marquee" aria-label="Volg ons op de socials">
+  <div class="wrap" style="padding-top:12px; padding-bottom:12px;">
+    <div class="socials-head">
+      <div class="socials-title">Volg ons op de socials!</div>
+      <div class="media-controls">
+        <button class="media-arrow" type="button" data-social-left aria-label="Vorige">&#x2039;</button>
+        <button class="media-arrow" type="button" data-social-right aria-label="Volgende">&#x203A;</button>
+      </div>
+    </div>
+
+    <div class="media-viewport" data-social-viewport>
+      <div class="media-track" data-social-track>
+        <div class="media-item">
+          <img src="bannersocials0.jpg" alt="Social banner 1">
+          <div class="media-cap">
+            <div class="social-links">
+              <a class="social-link" href="https://www.instagram.com/reel/DTPTeCOiI6u/?igsh=MWVmdmkwbTEzZHJ6cQ==" target="_blank" rel="noopener" aria-label="Open Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="ig" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 2h-8.5A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4zm.5 2.25a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg></a>
+              <a class="social-link" href="https://www.facebook.com/share/r/1CsQbaX2tM/" target="_blank" rel="noopener" aria-label="Open Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fb" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.08 4.39 23.06 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.54-4.7 1.32 0 2.7.24 2.7.24v2.98h-1.52c-1.5 0-1.97.94-1.97 1.9v2.29h3.35l-.54 3.49h-2.81V24C19.61 23.06 24 18.08 24 12.07z"/></svg></a>
+            </div>
+            <span>Bekijk op socials</span>
+          </div>
+        </div>
+
+        <div class="media-item">
+          <img src="bannersocials1.jpg" alt="Social banner 2">
+          <div class="media-cap">
+            <div class="social-links">
+              <a class="social-link" href="https://www.instagram.com/p/DTNM4nMCOSW/?igsh=MTBjZmthODRicXIxcA==" target="_blank" rel="noopener" aria-label="Open Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="ig" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 2h-8.5A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4zm.5 2.25a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg></a>
+              <a class="social-link" href="https://www.facebook.com/share/p/1AF6LkpXJ7/" target="_blank" rel="noopener" aria-label="Open Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fb" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.08 4.39 23.06 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.54-4.7 1.32 0 2.7.24 2.7.24v2.98h-1.52c-1.5 0-1.97.94-1.97 1.9v2.29h3.35l-.54 3.49h-2.81V24C19.61 23.06 24 18.08 24 12.07z"/></svg></a>
+            </div>
+            <span>Bekijk op socials</span>
+          </div>
+        </div>
+
+        <div class="media-item">
+          <img src="bannersocials2.jpg" alt="Social banner 3">
+          <div class="media-cap">
+            <div class="social-links">
+              <a class="social-link" href="https://www.instagram.com/p/DTFbANfAONH/?igsh=MW4xaTR0cGhsenl2Mg==" target="_blank" rel="noopener" aria-label="Open Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="ig" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 2h-8.5A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4zm.5 2.25a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg></a>
+              <a class="social-link" href="https://www.facebook.com/share/p/185c7GgXJZ/" target="_blank" rel="noopener" aria-label="Open Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fb" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.08 4.39 23.06 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.54-4.7 1.32 0 2.7.24 2.7.24v2.98h-1.52c-1.5 0-1.97.94-1.97 1.9v2.29h3.35l-.54 3.49h-2.81V24C19.61 23.06 24 18.08 24 12.07z"/></svg></a>
+            </div>
+            <span>Bekijk op socials</span>
+          </div>
+        </div>
+
+        <div class="media-item">
+          <img src="bannersocials3.jpg" alt="Social banner 4">
+          <div class="media-cap">
+            <div class="social-links">
+              <a class="social-link" href="https://www.instagram.com/p/DTFhvBIAOff/?igsh=emppb2FtMjNsOHJr" target="_blank" rel="noopener" aria-label="Open Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="ig" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 2h-8.5A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4zm.5 2.25a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg></a>
+              <a class="social-link" href="https://www.facebook.com/share/p/19bWCNKwJr/" target="_blank" rel="noopener" aria-label="Open Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fb" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.08 4.39 23.06 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.54-4.7 1.32 0 2.7.24 2.7.24v2.98h-1.52c-1.5 0-1.97.94-1.97 1.9v2.29h3.35l-.54 3.49h-2.81V24C19.61 23.06 24 18.08 24 12.07z"/></svg></a>
+            </div>
+            <span>Bekijk op socials</span>
+          </div>
+        </div>
+
+        <div class="media-item">
+          <img src="bannersocials4.jpg" alt="Social banner 5">
+          <div class="media-cap">
+            <div class="social-links">
+              <a class="social-link" href="https://www.instagram.com/reel/DTe4oxNiCgs/?igsh=MTZsc3oxYWhxcjg3bw==" target="_blank" rel="noopener" aria-label="Open Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="ig" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 2h-8.5A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4zm.5 2.25a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg></a>
+              <a class="social-link" href="https://www.facebook.com/share/r/14VJXLBG3L4/" target="_blank" rel="noopener" aria-label="Open Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fb" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.08 4.39 23.06 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.54-4.7 1.32 0 2.7.24 2.7.24v2.98h-1.52c-1.5 0-1.97.94-1.97 1.9v2.29h3.35l-.54 3.49h-2.81V24C19.61 23.06 24 18.08 24 12.07z"/></svg></a>
+            </div>
+            <span>Bekijk op socials</span>
+          </div>
+        </div>
+
+        <div class="media-item">
+          <img src="bannersocials5.jpg" alt="Social banner 6">
+          <div class="media-cap">
+            <div class="social-links">
+              <a class="social-link" href="https://www.instagram.com/p/DTBV6w_AHa8/?igsh=MXM4c3FqdGNnanBpcQ==" target="_blank" rel="noopener" aria-label="Open Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="ig" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 2h-8.5A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4zm.5 2.25a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg></a>
+              <a class="social-link" href="https://www.facebook.com/share/p/1BvkHQRXUi/" target="_blank" rel="noopener" aria-label="Open Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fb" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.08 4.39 23.06 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.54-4.7 1.32 0 2.7.24 2.7.24v2.98h-1.52c-1.5 0-1.97.94-1.97 1.9v2.29h3.35l-.54 3.49h-2.81V24C19.61 23.06 24 18.08 24 12.07z"/></svg></a>
+            </div>
+            <span>Bekijk op socials</span>
+          </div>
+        </div>
+
+        <div class="media-item">
+          <img src="bannersocials6.jpg" alt="Social banner 7">
+          <div class="media-cap">
+            <div class="social-links">
+              <a class="social-link" href="https://www.instagram.com/p/DTBV6w_AHa8/?igsh=MXM4c3FqdGNnanBpcQ==" target="_blank" rel="noopener" aria-label="Open Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="ig" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 2h-8.5A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4zm.5 2.25a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg></a>
+              <a class="social-link" href="https://www.facebook.com/share/r/1Fo5TmexFf/" target="_blank" rel="noopener" aria-label="Open Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fb" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.08 4.39 23.06 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.54-4.7 1.32 0 2.7.24 2.7.24v2.98h-1.52c-1.5 0-1.97.94-1.97 1.9v2.29h3.35l-.54 3.49h-2.81V24C19.61 23.06 24 18.08 24 12.07z"/></svg></a>
+            </div>
+            <span>Bekijk op socials</span>
+          </div>
+        </div>
+
+
+        <div class="media-item">
+          <img src="bannersocials7.jpg" alt="Website projectmolenzicht.nl">
+          <div class="media-cap">
+            <div class="social-links">
+              <a class="social-link" href="https://projectmolenzicht.nl" target="_blank" rel="noopener" aria-label="Open projectmolenzicht.nl">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path class="web" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm7.93 9h-2.91a15.65 15.65 0 0 0-1.29-5.18A8.02 8.02 0 0 1 19.93 11zM12 4.07c.83 1.2 1.48 2.56 1.91 4.03h-3.82A13.4 13.4 0 0 1 12 4.07zM4.07 13h2.91c.2 1.77.65 3.44 1.29 5.18A8.02 8.02 0 0 1 4.07 13zm2.91-2H4.07a8.02 8.02 0 0 1 4.2-5.18A15.65 15.65 0 0 0 6.98 11zm5.02 8.93a13.4 13.4 0 0 1-1.91-4.03h3.82A13.4 13.4 0 0 1 12 19.93zM14.34 13H9.66c-.23-1.7-.23-3.3 0-5h4.68c.23 1.7.23 3.3 0 5zm1.39 5.18A15.65 15.65 0 0 0 17.02 13h2.91a8.02 8.02 0 0 1-4.2 5.18z"/>
+                </svg>
+              </a>
+            </div>
+            <a class="social-text" style="color:#fff;" href="https://projectmolenzicht.nl" target="_blank" rel="noopener">projectmolenzicht.nl</a>
+          </div>
+        </div>
+
+        <div class="media-item">
+          <img src="bannersocials8.jpg" alt="WhatsApp Updates Molenzicht">
+          <div class="media-cap">
+            <div class="social-links">
+              <a class="social-link" href="https://chat.whatsapp.com/CYCVeNXQyVLL1J7FohJbdt" target="_blank" rel="noopener" aria-label="Open WhatsApp groep Updates Molenzicht">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path class="wa" d="M12 2C6.477 2 2 6.477 2 12c0 1.77.463 3.47 1.34 4.96L2 22l5.17-1.34A9.94 9.94 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm5.796 14.46c-.24.68-1.4 1.26-1.96 1.36-.5.08-1.14.11-1.84-.12-.42-.14-.96-.31-1.65-.61-2.9-1.25-4.78-4.27-4.92-4.46-.14-.19-1.17-1.56-1.17-2.97 0-1.41.73-2.11.99-2.4.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.66.5.24.58.82 2.01.89 2.16.07.14.12.32.02.51-.1.19-.15.31-.3.47-.15.16-.31.35-.44.47-.15.14-.31.3-.13.59.18.29.77 1.28 1.65 2.07 1.14 1.03 2.1 1.35 2.4 1.5.3.15.48.13.66-.08.18-.21.76-.9.97-1.21.21-.31.42-.26.71-.15.29.11 1.76.83 2.07.98.31.15.52.23.6.35.08.12.08.73-.16 1.41z"/>
+                </svg>
+              </a>
+            </div>
+            <a class="social-text" style="color:#fff;" href="https://chat.whatsapp.com/CYCVeNXQyVLL1J7FohJbdt" target="_blank" rel="noopener">Updates Molenzicht</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script type="module" src="./app.js?v=6"></script>
+</body>
+</html>
