@@ -153,11 +153,11 @@ export const PARTIES = [
     id: 'voor_nissewaard',
     name: 'VOOR Nissewaard',
     answers: {
-      s1: { pos: -1, note: `Hier komt mijn toelichting als partij` },
-      s2: { pos: -1, note: `Hier komt mijn toelichting als partij` },
-      s3: { pos: -1, note: `Hier komt mijn toelichting als partij` },
-      s4: { pos: -1, note: `Hier komt mijn toelichting als partij` },
-      s5: { pos: -1, note: `Hier komt mijn toelichting als partij` },
+      s1: { pos: 0, note: `Hier komt mijn toelichting als partij` },
+      s2: { pos: 0, note: `Hier komt mijn toelichting als partij` },
+      s3: { pos: 0, note: `Hier komt mijn toelichting als partij` },
+      s4: { pos: 0, note: `Hier komt mijn toelichting als partij` },
+      s5: { pos: 0, note: `Hier komt mijn toelichting als partij` },
     },
   },
   {
@@ -191,3 +191,4 @@ export const PARTY_STANDPOINTS = {
   'voor_nissewaard':   { wonen_leefbaarheid: '', verkeersontsluiting: '', uw_molenzicht: '' },
   'vvd':   { wonen_leefbaarheid: '', verkeersontsluiting: '', uw_molenzicht: '' },
 };
+
