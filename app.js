@@ -1,9 +1,9 @@
 // app.js
-import { THEMES, STATEMENTS, PARTIES, PARTY_STANDPOINTS } from "./data.js?v=6";
+import { THEMES, STATEMENTS, PARTIES, PARTY_STANDPOINTS } from "./data.js?v=7";
 
 const ANSWER_LABELS = {
   1: "Eens",
-  0: "Geen mening",
+  0: "Neutraal",
   "-1": "Oneens"
 };
 
@@ -22,7 +22,7 @@ const state = {
 // Plak hier je Google Apps Script Web App URL.
 // Laat leeg om logging uit te zetten.
 const SHEETS_WEBAPP_URL =
-  "https://script.google.com/a/macros/projectmolenzicht.nl/s/AKfycbyzX82ZC09canB8CVMD06-5jtFvAx32tPGI8an-962_iZoHPvyX58StdAAid0VLmlq2gQ/exec";
+  "https://script.google.com/macros/s/AKfycbxYWDY76endvUjhOFRfCpIiHHwu0cybBKvu-NU9ZdeIJQyqKUx160i-YYn4DcPIJAuPLw/exec";
 
 function $(sel) {
   return document.querySelector(sel);
@@ -588,9 +588,9 @@ function renderStandpuntenPartijen(){
     const party = PARTIES.find(p => p.id === selectedId);
     const s = PARTY_STANDPOINTS?.[selectedId] ?? {};
 
-    const wonen = (s.wonen_bouwen ?? '').trim();
-    const verkeer = (s.verkeer_parkeren ?? '').trim();
-    const molen = (s.molenzicht ?? '').trim();
+const wonen = (s.wonen_leefbaarheid ?? '').trim();
+const verkeer = (s.verkeersontsluiting ?? '').trim();
+const molen = (s.uw_molenzicht ?? '').trim();
 
     detail.classList.remove('hidden');
     detail.innerHTML = `
