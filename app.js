@@ -281,19 +281,22 @@ function computeResults() {
 
     for (const st of STATEMENTS) {
       const u = state.userAnswers[st.id];
-      if (u === 0 || u === null) continue;
+      if (u === null) continue;
 
       const w = state.themeWeights[st.themeId] ?? 3;
       const p = party.answers?.[st.id]?.pos ?? 0;
 
-      let pts = 0;
-      if (p === 0) pts = 1;
-      else if (p === u) pts = 2;
-      else pts = 0;
+let pts = 0;
 
-      score += w * pts;
-      maxScore += w * 2;
-    }
+if (p === u) {
+  pts = 2;        // ook neutraal-neutraal = 2
+}
+else if (p === 0 || u === 0) {
+  pts = 1;        // één van beide neutraal
+}
+else {
+  pts = 0;        // tegenovergesteld
+}
 
     const pct = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
     results.push({ partyId: party.id, name: party.name, pct });
